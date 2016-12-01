@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# IntelliJ
+/.idea/workspace.xml
+
+# Test mp3 directory
+/mp3/
