@@ -39,10 +39,19 @@ def normailze(name):
     return re.sub('[^A-Za-z0-9가-힣]', '', name)
 
 
+# get normalized filenames in given path
+def get_normalized_filenames(path):
+    filenames = get_filenames(path, "*.mp3")
+    normailzed = map(lambda x: normailze(x), filenames)
+    return set(normailzed)
+
+
 # Copy or move mp3 files from src to dest directory
 def copy_mp3_files(src, dest, move):
-    dest_filenames = get_filenames(dest, "*.mp3")
-    dest_normalized_filenames = map(lambda x: normailze(x), dest_filenames)
+    header = "MOVE" if move else "COPY"
+    print("[%s] %s => %s" % (header, src, dest))
+
+    dest_filenames = get_normalized_filenames(dest)
 
     for filename in get_filenames(src, "*.mp3"):
         new_filename = remove_ranking(filename)
@@ -50,25 +59,33 @@ def copy_mp3_files(src, dest, move):
         src_path = os.path.join(src, filename)
 
         # skip copy/move if exists
-        if normalized in dest_normalized_filenames:
+        if normalized in dest_filenames:
             print("[SKIP] %s" % filename)
             continue
 
         # copy/move
         dest_path = os.path.join(dest, new_filename)
-        print("[%s] %s => %s" % ("MOVE" if move else "COPY", filename, new_filename))
+        print("[%s] %s => %s" % (header, filename, new_filename))
         if move:
             shutil.move(src_path, dest_path)
         else:
             shutil.copyfile(src_path, dest_path)
 
+
 parser = argparse.ArgumentParser(description='Move mp3 files to another directory')
 parser.add_argument('--src', help='source directory', default='./')
 parser.add_argument('--dest', help='destination directory', required=True)
 parser.add_argument('--move', help='move file', action='store_true')
+parser.add_argument('--regex', help='source directory regular expression')
 args = parser.parse_args()
 
-print("source dir : %s" % args.src)
-print("destination dir : %s" % args.dest)
-
-copy_mp3_files(os.path.abspath(args.src), os.path.abspath(args.dest), args.move)
+dest_dir = os.path.abspath(args.dest)
+if args.regex:
+    for d in get_filenames(args.src, args.regex):
+        copy_mp3_files(os.path.abspath(os.path.join(args.src, d)),
+                       dest_dir,
+                       args.move)
+else:
+    copy_mp3_files(os.path.abspath(args.src),
+                   dest_dir,
+                   args.move)
