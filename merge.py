@@ -7,8 +7,11 @@ import shutil
 
 # get filenames with matching pattern in given path
 def get_filenames(path, pattern):
+    cwd = os.getcwd()
     os.chdir(path)
-    return glob.glob(pattern)
+    filenames = glob.glob(pattern)
+    os.chdir(cwd)
+    return filenames
 
 
 # parse filename and return dictionary
@@ -36,7 +39,9 @@ def remove_ranking(name):
 # Normalize string
 # Removes whitespace, special characters
 def normailze(name):
-    return re.sub('[^A-Za-z0-9가-힣]', '', name)
+    pass1 = re.sub('\(.*\)', '', name)
+    pass2 = re.sub('[^A-Za-z0-9가-힣]', '', pass1)
+    return pass2
 
 
 # get normalized filenames in given path
@@ -64,7 +69,7 @@ def copy_mp3_files(src, dest, move):
 
         # copy/move
         dest_path = os.path.join(dest, new_filename)
-        print("[%s] %s => %s" % (header, filename, new_filename))
+        print("[%s] %s => %s : %s" % (header, filename, new_filename, normalized))
         if move:
             shutil.move(src_path, dest_path)
         else:
