@@ -49,7 +49,7 @@ def get_normalized_filenames(path):
 # Copy or move mp3 files from src to dest directory
 def copy_mp3_files(src, dest, move):
     header = "MOVE" if move else "COPY"
-    print("[%s] %s => %s" % (header, src, dest))
+    print("%s => %s" % (src, dest))
 
     dest_filenames = get_normalized_filenames(dest)
 
@@ -60,7 +60,6 @@ def copy_mp3_files(src, dest, move):
 
         # skip copy/move if exists
         if normalized in dest_filenames:
-            print("[SKIP] %s" % filename)
             continue
 
         # copy/move
@@ -76,13 +75,16 @@ parser = argparse.ArgumentParser(description='Move mp3 files to another director
 parser.add_argument('--src', help='source directory', default='./')
 parser.add_argument('--dest', help='destination directory', required=True)
 parser.add_argument('--move', help='move file', action='store_true')
-parser.add_argument('--regex', help='source directory regular expression')
 args = parser.parse_args()
 
 dest_dir = os.path.abspath(args.dest)
-if args.regex:
-    for d in get_filenames(args.src, args.regex):
-        copy_mp3_files(os.path.abspath(os.path.join(args.src, d)),
+wildcard_src = True if any(ch in args.src for ch in ['?', '*']) else False
+
+if wildcard_src:
+    src_parent = os.path.dirname(args.src)
+    src_pattern = os.path.basename(args.src)
+    for d in get_filenames(src_parent, src_pattern):
+        copy_mp3_files(os.path.abspath(os.path.join(src_parent, d)),
                        dest_dir,
                        args.move)
 else:
