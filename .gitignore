@@ -89,7 +89,9 @@ ENV/
 .ropeproject
 
 # IntelliJ
+/.idea/misc.xml
 /.idea/workspace.xml
+/.idea/*.iml
 
 # Test mp3 directory
 /mp3/
