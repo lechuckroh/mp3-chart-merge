@@ -39,7 +39,7 @@ def remove_ranking(name):
 # Normalize string
 # Removes whitespace, special characters
 def normailze(name):
-    pass1 = re.sub('\(.*\)', '', name)
+    pass1 = re.sub('\(.*\)', '', name.lower())
     pass2 = re.sub('[^A-Za-z0-9가-힣]', '', pass1)
     return pass2
 
