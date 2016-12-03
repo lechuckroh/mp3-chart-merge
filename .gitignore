@@ -91,6 +91,7 @@ ENV/
 # IntelliJ
 /.idea/misc.xml
 /.idea/workspace.xml
+/.idea/runConfigurations
 /.idea/*.iml
 
 # Test mp3 directory

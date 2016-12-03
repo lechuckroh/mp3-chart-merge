@@ -6,7 +6,7 @@ This script removes the ranking from the mp3 filename and moves to another direc
 For example, the following command will move mp3 files from `src` directory to `dest` directory.
 
 ```bash
-$ python3 merge.py --src ./Billboard.2016.12.02 --dest ./Billboard.2016 --move 
+$ python merge.py --src ./Billboard.2016.12.02 --dest ./Billboard.2016 --move 
 ```
 
 ```
