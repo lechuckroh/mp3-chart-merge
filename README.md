@@ -22,8 +22,8 @@ $ python merge.py --src ./Billboard.2016.12.02 --dest ./Billboard.2016 --move
 ### source filename pattern
 
 ```
-${ranking} ${singer}-${title}.mp3
-${ranking}. ${singer}-${title}.mp3
+${ranking} ${artist}-${title}.mp3
+${ranking}. ${artist}-${title}.mp3
 ```
 
 There can be a space between each token.

@@ -16,24 +16,32 @@ def get_filenames(path, pattern):
 
 # parse filename and return dictionary
 def parse_filename(name):
-    search = re.search('(^\d+)\.?(.*)-(.*).mp3', name, re.IGNORECASE)
+    search = re.search('(^\d+)\.?(.*)', name, re.IGNORECASE)
     if search:
-        return {
-            'rank': search.group(1),
-            'singer': search.group(2).strip(),
-            'title': search.group(3).strip()
-        }
+        rank = search.group(1)
+        tokens = search.group(2).split('-', 1)
+        if len(tokens) == 2:
+            return {
+                'rank': rank,
+                'artist': tokens[0].strip(),
+                'title': tokens[1].strip()
+            }
+        else:
+            return {
+                'rank': rank,
+                'title': tokens[0].strip()
+            }
     else:
         return {'title': name}
 
 
 # Remove ranking from filename
 def remove_ranking(name):
-    info = parse_filename(name)
-    if info['singer']:
-        return "%s - %s.mp3" % (info['singer'], info['title'])
+    info = parse_filename(name[:-4])
+    if info['artist']:
+        return "%s - %s.mp3" % (info['artist'], info['title'])
     else:
-        return name
+        return "%s.mp3" % info['title']
 
 
 # Normalize string
