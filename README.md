@@ -1,12 +1,14 @@
 # mp3 chart merge
 
+[한국어](README-kr.md)
+
 This script removes the ranking from the mp3 filename and moves to another directory.
 
 
 For example, the following command will move mp3 files from `src` directory to `dest` directory.
 
 ```bash
-$ python merge.py --src ./Billboard.2016.12.02 --dest ./Billboard.2016 --move 
+$ python merge.py --src ./Billboard.2016.12.02 --dest ./Billboard.2016 --move
 ```
 
 ```
@@ -31,7 +33,7 @@ There can be a space between each token.
 ### destination filename pattern
 
 ```
-${singler} - ${title}.mp3
+${artist} - ${title}.mp3
 ```
 
 ### filename comparison rule
