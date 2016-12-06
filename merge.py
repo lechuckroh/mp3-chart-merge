@@ -1,8 +1,19 @@
 import argparse
+import errno
 import glob
 import os
 import re
 import shutil
+
+
+# make sure path exists
+def mkdirs(path):
+    if not os.path.exists(path):
+        try:
+            os.makedirs(path)
+        except OSError as exception:
+            if exception.errno != errno.EEXIST:
+                raise
 
 
 # get filenames with matching pattern in given path
@@ -63,6 +74,7 @@ def copy_mp3_files(src, dest, move):
     header = "MOVE" if move else "COPY"
     print("%s => %s" % (src, dest))
 
+    mkdirs(dest)
     dest_filenames = get_normalized_filenames(dest)
 
     for filename in get_filenames(src, "*.mp3"):
