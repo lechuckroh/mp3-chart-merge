@@ -1,6 +1,6 @@
 # mp3 chart merge
 
-[한국어](README-kr.md)
+[한국어](README-ko_KR.md)
 
 This script removes the ranking from the mp3 filename and moves to another directory.
 
