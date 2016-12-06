@@ -88,7 +88,7 @@ def copy_mp3_files(src, dest, move):
 
         # copy/move
         dest_path = os.path.join(dest, new_filename)
-        print("[%s] %s => %s : %s" % (header, filename, new_filename, normalized))
+        print("[%s] %s => %s" % (header, filename, new_filename))
         if move:
             shutil.move(src_path, dest_path)
         else:
