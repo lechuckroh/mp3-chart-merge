@@ -16,9 +16,9 @@ def list_mp3_filenames(path):
 # create m3u file
 def create_m3u(dest, filenames):
     f = open(dest, 'w')
-    f.write("#EXTM3U\n")
+    f.write("#EXTM3U\r\n")
     for filename in filenames:
-        f.write("%s\n" % filename)
+        f.write("%s\r\n" % filename)
     f.close()
     print("[OK] %s created" % dest)
 
